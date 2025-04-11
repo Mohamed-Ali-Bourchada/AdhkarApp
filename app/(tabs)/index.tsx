@@ -175,6 +175,79 @@ export default function HomeScreen() {
             size="medium"
           />
         </View>
+
+        {/* Dua Section */}
+        <View style={styles.duaHeader}>
+          <View style={styles.duaTitleContainer}>
+            <Text style={[styles.duaTitleArabic, { color: colors.arabicText }]}>
+              الأدعية المأثورة
+            </Text>
+            <Text style={[styles.duaTitle, { color: colors.text }]}>
+              Featured Duas
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.duaCardsContainer}>
+          <LinearGradient
+            colors={colorScheme === 'dark' ? ['#293341', '#1D242F'] : ['#E1EFF5', '#D1E5EF']}
+            style={[styles.duaCard, {
+              borderColor: colorScheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)'
+            }]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <View style={styles.duaIconContainer}>
+              <View style={[styles.duaIconCircle, { backgroundColor: colorScheme === 'dark' ? '#1F7A8C' : '#1F7A8C' }]}>
+                <Ionicons name="heart" size={24} color="#FFFFFF" />
+              </View>
+            </View>
+            <Text style={styles.duaArabicText}>
+              اللَّهُمَّ إِنِّي أَسْأَلُكَ الْهُدَى وَالتُّقَى وَالْعَفَافَ وَالْغِنَى
+            </Text>
+            <Text style={styles.duaTranslationText}>
+              O Allah, I ask You for guidance, piety, chastity and contentment
+            </Text>
+            <View style={styles.duaSource}>
+              <Text style={styles.duaSourceText}>- رواه مسلم</Text>
+            </View>
+          </LinearGradient>
+
+          <LinearGradient
+            colors={colorScheme === 'dark' ? ['#2D3546', '#1D2536'] : ['#DFE1EB', '#CFD1E1']}
+            style={[styles.duaCard, {
+              borderColor: colorScheme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)'
+            }]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+          >
+            <View style={styles.duaIconContainer}>
+              <View style={[styles.duaIconCircle, { backgroundColor: colorScheme === 'dark' ? '#595F85' : '#595F85' }]}>
+                <Ionicons name="shield" size={24} color="#FFFFFF" />
+              </View>
+            </View>
+            <Text style={styles.duaArabicText}>
+              اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ
+            </Text>
+            <Text style={styles.duaTranslationText}>
+              O Allah, I seek refuge in You from worry and grief, from incapacity and laziness, from cowardice and miserliness, from being heavily in debt and from being overpowered by men
+            </Text>
+            <View style={styles.duaSource}>
+              <Text style={styles.duaSourceText}>- رواه البخاري</Text>
+            </View>
+          </LinearGradient>
+        </View>
+
+        <View style={styles.actionButtonContainer}>
+          <AnimatedButton
+            title="View All Duas"
+            arabicTitle="عرض جميع الأدعية"
+            icon="book"
+            onPress={() => {}}
+            variant="secondary"
+            size="medium"
+          />
+        </View>
       </ScrollView>
 
       <ThemedView style={styles.footer}>
@@ -339,7 +412,79 @@ const styles = StyleSheet.create({
   actionButtonContainer: {
     paddingHorizontal: 16,
     marginTop: 8,
+    marginBottom: 24,
+  },
+  duaHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 16,
     marginBottom: 16,
+    marginTop: 8,
+  },
+  duaTitleContainer: {
+    flex: 1,
+  },
+  duaTitleArabic: {
+    fontSize: 22,
+    fontWeight: '700',
+    textAlign: 'right',
+    marginBottom: 2,
+  },
+  duaTitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    opacity: 0.7,
+  },
+  duaCardsContainer: {
+    paddingHorizontal: 16,
+    marginBottom: 16,
+  },
+  duaCard: {
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 16,
+    borderWidth: 1,
+    elevation: 4,
+    shadowColor: 'rgba(0,0,0,0.2)',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+  },
+  duaIconContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  duaIconCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  duaArabicText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1F7A8C',
+    textAlign: 'right',
+    marginBottom: 12,
+    lineHeight: 32,
+  },
+  duaTranslationText: {
+    fontSize: 14,
+    color: '#546E7A',
+    textAlign: 'left',
+    marginBottom: 16,
+    lineHeight: 22,
+  },
+  duaSource: {
+    alignItems: 'flex-end',
+  },
+  duaSourceText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#777777',
+    fontStyle: 'italic',
   },
   footer: {
     padding: 20,

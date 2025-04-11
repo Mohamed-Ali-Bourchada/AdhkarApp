@@ -49,72 +49,71 @@ export default function CategoryScreen() {
     headerBgColor = colorScheme === 'dark' ? '#2A2D40' : '#454869';
   }
 
+  // Function to get the title based on the category ID
+  const getCategoryTitle = (categoryId: string) => {
+    switch(categoryId) {
+      case 'morning':
+        return {
+          arabic: 'أذكار الصباح',
+          english: 'Morning Adhkar'
+        };
+      case 'evening':
+        return {
+          arabic: 'أذكار المساء',
+          english: 'Evening Adhkar'
+        };
+      case 'sleep':
+        return {
+          arabic: 'أذكار النوم',
+          english: 'Before Sleep Adhkar'
+        };
+      case 'prayer':
+        return {
+          arabic: 'أذكار الصلاة',
+          english: 'Prayer Adhkar'
+        };
+      default:
+        return {
+          arabic: 'الأذكار',
+          english: 'Adhkar'
+        };
+    }
+  };
+  
+  const categoryTitle = getCategoryTitle(id as string);
+
   return (
-    <>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <Stack.Screen 
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+      <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
+      
+      <Stack.Screen
         options={{
-          headerShown: false
+          title: categoryTitle.english,
+          headerStyle: {
+            backgroundColor: colors.background,
+          },
+          headerTintColor: colors.text,
+          headerBackTitleVisible: false,
+          headerBackTitle: '',
+          headerBackImage: ({ tintColor }) => (
+            <Ionicons name="chevron-back" size={24} color={tintColor} style={{ marginLeft: 8 }} />
+          ),
         }}
       />
       
-      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-        <View
-          style={[styles.headerBackground, { backgroundColor: headerBgColor }]}
-        >
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => router.back()}
-          >
-            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
-          </TouchableOpacity>
-          
-          <View style={styles.headerContent}>
-            <Text style={styles.arabicTitle}>
-              {arabicTitle}
-            </Text>
-            <Text style={styles.englishTitle}>
-              {category.title}
-            </Text>
-            
-            <View style={styles.iconContainer}>
-              <Ionicons name={iconName} size={24} color="#FFFFFF" />
-            </View>
-          </View>
-        </View>
+      <View style={styles.content}>
+        <Text style={[styles.arabicTitle, { color: colors.arabicText }]}>
+          {categoryTitle.arabic}
+        </Text>
+        <Text style={[styles.englishTitle, { color: colors.text }]}>
+          {categoryTitle.english}
+        </Text>
         
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-          <View style={[styles.descriptionContainer, { 
-            backgroundColor: colors.card,
-            borderColor: colors.border 
-          }]}>
-            <Text style={[styles.arabicDescription, { color: colors.arabicText }]}>
-              {category.arabicDescription}
-            </Text>
-            <Text style={[styles.description, { color: colors.translationText }]}>
-              {category.description}
-            </Text>
-          </View>
-          
-          {category.adhkar.map((dhikr) => (
-            <AdhkarCard key={dhikr.id} dhikr={dhikr} />
-          ))}
-          
-          <View style={styles.footer}>
-            <Text style={[styles.footerArabicText, { color: colors.text }]}>
-              نهاية {id === 'morning' 
-                ? 'أذكار الصباح' 
-                : id === 'evening' 
-                ? 'أذكار المساء'
-                : 'أذكار النوم'}
-            </Text>
-            <Text style={[styles.footerText, { color: colors.translationText }]}>
-              End of {category.title.toLowerCase()}
-            </Text>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+        <Text style={[styles.placeholder, { color: colors.translationText }]}>
+          This screen would display the list of adhkar for the {categoryTitle.english} category.
+        </Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
@@ -138,83 +137,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-  headerBackground: {
-    paddingVertical: 24,
-    paddingHorizontal: 20,
-    paddingBottom: 30,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-  },
-  backButton: {
-    position: 'absolute',
-    left: 16,
-    top: 24,
-    width: 40,
-    height: 40,
+  content: {
+    flex: 1,
+    padding: 20,
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 10,
-  },
-  headerContent: {
-    alignItems: 'center',
-    marginTop: 12,
   },
   arabicTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#FFFFFF',
-    marginBottom: 4,
-  },
-  englishTitle: {
-    fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.85)',
-    marginBottom: 16,
-  },
-  iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingTop: 20,
-    paddingBottom: 24,
-  },
-  descriptionContainer: {
-    padding: 18,
-    marginHorizontal: 16,
-    marginBottom: 20,
-    borderRadius: 16,
-    borderWidth: 1,
-    alignItems: 'center',
-  },
-  arabicDescription: {
-    fontSize: 18,
-    fontWeight: '500',
     marginBottom: 8,
     textAlign: 'center',
   },
-  description: {
-    fontSize: 14,
+  englishTitle: {
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom: 24,
     textAlign: 'center',
   },
-  footer: {
-    padding: 24,
-    alignItems: 'center',
-  },
-  footerArabicText: {
+  placeholder: {
     fontSize: 16,
-    fontWeight: '500',
-    marginBottom: 4,
-  },
-  footerText: {
-    fontSize: 14,
-    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 40,
+    opacity: 0.7,
   }
 }); 
