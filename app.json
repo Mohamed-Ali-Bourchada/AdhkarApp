@@ -1,21 +1,31 @@
 {
   "expo": {
-    "name": "MyFirstApp",
-    "slug": "MyFirstApp",
+    "name": "Adhkar App",
+    "slug": "adhkar-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "adhkarapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1F7A8C"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.adhkarapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#1F7A8C"
+      },
+      "package": "com.adhkarapp"
     },
     "web": {
       "bundler": "metro",
@@ -30,12 +40,23 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#1F7A8C"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "description": "A modern Islamic supplications app with authentic morning, evening and sleep-time adhkar featuring beautiful Arabic typography.",
+    "githubUrl": "https://github.com/yourusername/adhkar-app",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d80ded17-4fdc-4aba-a8dd-a1a66379b492"
+      }
+    },
+    "owner": "mohamed_ali_bourchada"
   }
 }
