@@ -39,6 +39,12 @@ export function CategoryCard({ id, title, arabicTitle, description, icon }: Cate
       : ['#454869', '#353859'];
   }
 
+  // Make sure the icon is valid
+  const safeIcon: keyof typeof Ionicons.glyphMap = 
+    typeof icon === 'string' && icon in Ionicons.glyphMap
+      ? icon 
+      : 'bookmark-outline';
+
   return (
     <Pressable 
       style={[styles.container, { 
@@ -55,7 +61,7 @@ export function CategoryCard({ id, title, arabicTitle, description, icon }: Cate
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       >
-        <Ionicons name={icon} size={28} color="#FFFFFF" />
+        <Ionicons name={safeIcon} size={28} color="#FFFFFF" />
       </LinearGradient>
       
       <View style={styles.textContainer}>

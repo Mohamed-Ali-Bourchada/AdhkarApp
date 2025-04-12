@@ -162,6 +162,7 @@ export default function CustomTextsScreen() {
           name="document-text-outline" 
           size={64} 
           color={colors.translationText + '50'} 
+          style={styles.emptyIcon}
         />
         <Text style={[styles.emptyTitle, { color: colors.text }]}>
           No entries yet
@@ -242,7 +243,11 @@ export default function CustomTextsScreen() {
               />
             )}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.listContent}
+            contentContainerStyle={[
+              styles.listContent, 
+              // Add extra padding at the bottom for the tab bar
+              { paddingBottom: Platform.OS === 'ios' ? 100 : 90 }
+            ]}
             showsVerticalScrollIndicator={false}
             ListEmptyComponent={renderEmptyState}
             refreshing={refreshing}
@@ -258,44 +263,47 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  keyboardAvoidingView: {
-    flex: 1,
-  },
   header: {
-    paddingVertical: 16,
     paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    position: 'relative',
   },
   headerTitle: {
     fontSize: 22,
     fontWeight: '700',
-    marginBottom: 4,
   },
   headerArabicTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: '600',
+    marginLeft: 10,
   },
   clearButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     position: 'absolute',
     right: 16,
     top: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
   },
   clearButtonText: {
     fontSize: 14,
     marginLeft: 4,
   },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
   inputContainer: {
-    marginBottom: 8,
+    marginBottom: 10,
   },
   editModeBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 10,
     paddingHorizontal: 16,
+    paddingVertical: 8,
     marginHorizontal: 16,
     marginBottom: 8,
     borderRadius: 8,
@@ -305,43 +313,47 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   cancelButton: {
-    padding: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
   cancelButtonText: {
     fontSize: 14,
-    fontWeight: '600',
-  },
-  listContent: {
-    paddingBottom: 20,
-    flexGrow: 1,
+    fontWeight: '500',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  listContent: {
+    paddingTop: 6,
+    paddingBottom: 20,
+  },
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 32,
-    paddingTop: 64,
+    marginTop: 60,
+  },
+  emptyIcon: {
+    marginBottom: 16,
   },
   emptyTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginTop: 16,
+    fontSize: 20,
+    fontWeight: '700',
     marginBottom: 8,
+    textAlign: 'center',
   },
   emptySubtitle: {
-    fontSize: 14,
-    textAlign: 'center',
+    fontSize: 16,
     marginBottom: 16,
+    textAlign: 'center',
     opacity: 0.7,
   },
   arabicEmptyText: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '500',
     textAlign: 'center',
-  }
+  },
 }); 

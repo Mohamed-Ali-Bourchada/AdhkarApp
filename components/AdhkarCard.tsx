@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Animated } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Animated, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useColorScheme } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { Dhikr } from '../data/adhkar';
+import { router } from 'expo-router';
 
 interface AdhkarCardProps {
   dhikr: Dhikr;
   expanded?: boolean;
+  categoryId?: string;
 }
 
-export function AdhkarCard({ dhikr, expanded = false }: AdhkarCardProps) {
+export function AdhkarCard({ dhikr, expanded = false, categoryId }: AdhkarCardProps) {
   const [isExpanded, setIsExpanded] = useState(expanded);
   const colorScheme = useColorScheme() ?? 'light';
   const colors = Colors[colorScheme];
@@ -27,6 +29,12 @@ export function AdhkarCard({ dhikr, expanded = false }: AdhkarCardProps) {
     }).start();
   };
 
+  const navigateToReader = () => {
+    if (categoryId) {
+      router.push(`/dhikr-reader/${categoryId}/${dhikr.id}`);
+    }
+  };
+
   const rotateIcon = animation.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '180deg'],
@@ -40,6 +48,8 @@ export function AdhkarCard({ dhikr, expanded = false }: AdhkarCardProps) {
         shadowColor: colorScheme === 'dark' ? '#000' : 'rgba(0,0,0,0.1)'
       }]} 
       onPress={toggleExpand}
+      onLongPress={navigateToReader}
+      delayLongPress={300}
     >
       <View style={styles.topRow}>
         <View style={[styles.countBadge, { backgroundColor: `${colors.primary}20` }]}>
@@ -48,13 +58,28 @@ export function AdhkarCard({ dhikr, expanded = false }: AdhkarCardProps) {
           </Text>
         </View>
         
-        <Animated.View style={[styles.expandIconContainer, { transform: [{ rotate: rotateIcon }] }]}>
-          <Ionicons 
-            name="chevron-down" 
-            size={22} 
-            color={colors.icon} 
-          />
-        </Animated.View>
+        <View style={styles.iconRow}>
+          {categoryId && (
+            <TouchableOpacity 
+              style={styles.readerIconContainer}
+              onPress={navigateToReader}
+            >
+              <Ionicons 
+                name="book-outline" 
+                size={20} 
+                color={colors.icon} 
+              />
+            </TouchableOpacity>
+          )}
+          
+          <Animated.View style={[styles.expandIconContainer, { transform: [{ rotate: rotateIcon }] }]}>
+            <Ionicons 
+              name="chevron-down" 
+              size={22} 
+              color={colors.icon} 
+            />
+          </Animated.View>
+        </View>
       </View>
       
       <View style={styles.contentContainer}>
@@ -101,77 +126,81 @@ export function AdhkarCard({ dhikr, expanded = false }: AdhkarCardProps) {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 16,
+    overflow: 'hidden',
     marginHorizontal: 16,
-    marginVertical: 10,
-    padding: 18,
+    marginBottom: 16,
+    padding: 16,
     borderWidth: 1,
     elevation: 2,
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
+    shadowRadius: 4,
   },
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 10,
+  },
+  iconRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  readerIconContainer: {
+    padding: 5,
+    marginRight: 8,
+  },
+  expandIconContainer: {
+    padding: 5,
   },
   countBadge: {
     paddingHorizontal: 12,
     paddingVertical: 4,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: 12,
   },
   countText: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
   },
   contentContainer: {
-    flex: 1,
+    alignItems: 'flex-start',
   },
   arabicText: {
-    fontSize: 26,
-    lineHeight: 42,
+    fontSize: 20,
+    lineHeight: 32,
     textAlign: 'right',
-    fontWeight: '500',
-    marginBottom: 16,
-    fontFamily: 'System',
+    alignSelf: 'stretch',
+    marginBottom: 8,
+    fontFamily: 'Amiri',
   },
   transliterationText: {
     fontSize: 16,
-    marginBottom: 10,
+    lineHeight: 24,
+    marginBottom: 12,
     fontStyle: 'italic',
-    textAlign: 'center',
   },
   translationText: {
     fontSize: 16,
-    marginBottom: 16,
     lineHeight: 24,
+    marginBottom: 16,
   },
   sourceContainer: {
-    paddingTop: 12,
     borderTopWidth: 1,
+    paddingTop: 12,
     marginBottom: 12,
+    width: '100%',
   },
   sourceText: {
     fontSize: 14,
     fontStyle: 'italic',
-    textAlign: 'right',
   },
   virtueContainer: {
-    marginTop: 4,
-    padding: 14,
-    borderRadius: 10,
+    padding: 12,
+    borderRadius: 8,
+    width: '100%',
   },
   virtueText: {
-    fontSize: 15,
-    lineHeight: 22,
+    fontSize: 14,
+    lineHeight: 20,
   },
-  expandIconContainer: {
-    height: 24,
-    width: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
 }); 

@@ -77,17 +77,6 @@ function RootLayoutNav() {
             style={styles.drawerItem}
             onPress={() => {
               props.navigation.closeDrawer();
-              router.push('/icon-generator');
-            }}
-          >
-            <Ionicons name="image" size={22} color={colors.primary} style={styles.drawerIcon} />
-            <Text style={[styles.drawerItemText, { color: colors.text }]}>App Icon</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={styles.drawerItem}
-            onPress={() => {
-              props.navigation.closeDrawer();
               // Handle settings navigation
             }}
           >
@@ -125,17 +114,18 @@ function RootLayoutNav() {
           }}
         />
         <Drawer.Screen
-          name="icon-generator"
-          options={{
-            drawerLabel: 'App Icon',
-            title: 'App Icon',
-          }}
-        />
-        <Drawer.Screen
           name="category/[id]"
           options={{
             drawerLabel: 'Category',
             title: 'Category',
+            drawerItemStyle: { height: 0 },
+          }}
+        />
+        <Drawer.Screen
+          name="dhikr-reader/[categoryId]/[dhikrId]"
+          options={{
+            drawerLabel: 'Dhikr Reader',
+            title: 'Dhikr Reader',
             drawerItemStyle: { height: 0 },
           }}
         />

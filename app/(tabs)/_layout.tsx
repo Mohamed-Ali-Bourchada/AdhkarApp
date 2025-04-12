@@ -20,23 +20,32 @@ export default function TabLayout() {
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: {
-          height: Platform.OS === 'ios' ? 88 : 68,
-          paddingBottom: Platform.OS === 'ios' ? 30 : 10,
-          paddingTop: 10,
+          height: 88,
+          paddingBottom: 15,
+          paddingTop: 5,
           borderTopWidth: 0,
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: colorScheme === 'dark' ? '#1A1D24' : '#FFFFFF',
+          borderTopLeftRadius: 0,
+          borderTopRightRadius: 0,
+          overflow: 'hidden',
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
           elevation: 8,
-          shadowColor: colorScheme === 'dark' ? '#000' : 'rgba(0,0,0,0.2)',
-          shadowOffset: { width: 0, height: -3 },
-          shadowOpacity: 0.3,
-          shadowRadius: 8,
-          position: Platform.OS === 'ios' ? 'absolute' : undefined,
+          zIndex: 100,
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          marginTop: 2,
+          marginTop: 0,
+          fontWeight: '500',
         },
         tabBarItemStyle: {
-          paddingVertical: 4,
+          paddingVertical: 5,
         },
       }}>
       <Tabs.Screen
@@ -50,6 +59,19 @@ export default function TabLayout() {
             </View>
           ),
           tabBarIcon: ({ color }) => <Ionicons name="home" size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="custom-texts"
+        options={{
+          title: 'My Texts',
+          tabBarLabel: ({ color }) => (
+            <View style={styles.tabLabelContainer}>
+              <Text style={[styles.arabicLabel, { color }]}>نصوصي</Text>
+              <Text style={[styles.englishLabel, { color }]}>My Texts</Text>
+            </View>
+          ),
+          tabBarIcon: ({ color }) => <Ionicons name="document-text" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -72,15 +94,19 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   tabLabelContainer: {
     alignItems: 'center',
-    marginTop: -4,
+    marginTop: 0,
+    paddingBottom: 0,
   },
   arabicLabel: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
-    marginBottom: 1,
+    marginBottom: 2,
+    textAlign: 'center',
   },
   englishLabel: {
     fontSize: 10,
-    opacity: 0.8,
+    opacity: 0.9,
+    fontWeight: '400',
+    textAlign: 'center',
   },
 });

@@ -324,6 +324,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.1)',
+    marginTop: 30,
   },
   welcomeTextArabic: {
     fontSize: 22,
@@ -338,7 +339,7 @@ const styles = StyleSheet.create({
   },
   introContainer: {
     marginHorizontal: 16,
-    marginTop: 8,
+    marginTop: 10,
     marginBottom: 24,
     alignItems: 'center',
   },
@@ -488,7 +489,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 20,
-    paddingBottom: 30,
+    marginBottom: 80,
     alignItems: 'center',
     borderTopWidth: 1,
     borderTopColor: 'rgba(200, 200, 200, 0.1)',

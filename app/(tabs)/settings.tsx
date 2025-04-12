@@ -104,18 +104,6 @@ export default function SettingsScreen() {
             </View>
             <Ionicons name="information-circle" size={24} color={colors.primary} />
           </TouchableOpacity>
-          
-          <TouchableOpacity 
-            style={[styles.settingRow, { borderColor: colors.border }]}
-          >
-            <View style={styles.settingTextContainer}>
-              <Text style={[styles.settingTitle, { color: colors.text }]}>App Icon</Text>
-              <Text style={[styles.settingDescription, { color: colors.translationText }]}>
-                View and export the app icon
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color={colors.translationText} />
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

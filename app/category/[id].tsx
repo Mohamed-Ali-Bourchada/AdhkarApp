@@ -1,10 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, Stack, router } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { adhkarData } from '@/data/adhkar';
-import { AdhkarCard } from '@/components/AdhkarCard';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -15,6 +14,14 @@ export default function CategoryScreen() {
   const colors = Colors[colorScheme];
   
   const category = adhkarData.find(cat => cat.id === id);
+  
+  useEffect(() => {
+    // Navigate to the first dhikr in the category when the component mounts
+    if (category && category.adhkar.length > 0) {
+      const firstDhikr = category.adhkar[0];
+      router.replace(`/dhikr-reader/${id}/${firstDhikr.id}`);
+    }
+  }, [id, category]);
   
   if (!category) {
     return (
@@ -31,64 +38,14 @@ export default function CategoryScreen() {
     );
   }
 
-  let iconName: keyof typeof Ionicons.glyphMap = 'book';
-  let arabicTitle = '';
-  let headerBgColor = '';
-  
-  if (id === 'morning') {
-    iconName = 'sunny';
-    arabicTitle = 'أذكار الصباح';
-    headerBgColor = colorScheme === 'dark' ? '#1F3A52' : '#77A5CC';
-  } else if (id === 'evening') {
-    iconName = 'moon';
-    arabicTitle = 'أذكار المساء';
-    headerBgColor = colorScheme === 'dark' ? '#2D3546' : '#595F85';
-  } else if (id === 'sleep') {
-    iconName = 'bed';
-    arabicTitle = 'أذكار النوم';
-    headerBgColor = colorScheme === 'dark' ? '#2A2D40' : '#454869';
-  }
-
-  // Function to get the title based on the category ID
-  const getCategoryTitle = (categoryId: string) => {
-    switch(categoryId) {
-      case 'morning':
-        return {
-          arabic: 'أذكار الصباح',
-          english: 'Morning Adhkar'
-        };
-      case 'evening':
-        return {
-          arabic: 'أذكار المساء',
-          english: 'Evening Adhkar'
-        };
-      case 'sleep':
-        return {
-          arabic: 'أذكار النوم',
-          english: 'Before Sleep Adhkar'
-        };
-      case 'prayer':
-        return {
-          arabic: 'أذكار الصلاة',
-          english: 'Prayer Adhkar'
-        };
-      default:
-        return {
-          arabic: 'الأذكار',
-          english: 'Adhkar'
-        };
-    }
-  };
-  
-  const categoryTitle = getCategoryTitle(id as string);
-
+  // Show loading screen while redirecting to the dhikr reader
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <StatusBar barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'} />
       
       <Stack.Screen
         options={{
-          title: categoryTitle.english,
+          title: category.title,
           headerStyle: {
             backgroundColor: colors.background,
           },
@@ -101,16 +58,10 @@ export default function CategoryScreen() {
         }}
       />
       
-      <View style={styles.content}>
-        <Text style={[styles.arabicTitle, { color: colors.arabicText }]}>
-          {categoryTitle.arabic}
-        </Text>
-        <Text style={[styles.englishTitle, { color: colors.text }]}>
-          {categoryTitle.english}
-        </Text>
-        
-        <Text style={[styles.placeholder, { color: colors.translationText }]}>
-          This screen would display the list of adhkar for the {categoryTitle.english} category.
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={[styles.loadingText, { color: colors.text }]}>
+          جاري تحميل الأذكار...
         </Text>
       </View>
     </SafeAreaView>
@@ -137,28 +88,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-  content: {
+  loadingContainer: {
     flex: 1,
-    padding: 20,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
-  arabicTitle: {
-    fontSize: 28,
-    fontWeight: '700',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  englishTitle: {
+  loadingText: {
     fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 24,
+    marginTop: 16,
     textAlign: 'center',
-  },
-  placeholder: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 40,
-    opacity: 0.7,
   }
 }); 

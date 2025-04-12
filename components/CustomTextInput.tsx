@@ -58,7 +58,12 @@ export function CustomTextInput({
         onPress={onSubmit}
         disabled={value.trim().length === 0}
       >
-        <Ionicons name="add" size={24} color="#FFFFFF" />
+        <Ionicons 
+          name="add-outline" 
+          size={24} 
+          color="#FFFFFF"
+          style={styles.submitIcon} 
+        />
       </TouchableOpacity>
     </View>
   );
@@ -103,5 +108,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
+  },
+  submitIcon: {
+    marginLeft: 0,
+    marginRight: 0,
   }
 }); 

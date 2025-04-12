@@ -48,7 +48,7 @@
       "typedRoutes": true
     },
     "description": "A modern Islamic supplications app with authentic morning, evening and sleep-time adhkar featuring beautiful Arabic typography.",
-    "githubUrl": "https://github.com/yourusername/adhkar-app",
+    "githubUrl": "https://github.com/Mohamed-Ali-Bourchada/AdhkarApp.git",
     "extra": {
       "router": {
         "origin": false
